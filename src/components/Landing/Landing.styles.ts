@@ -2,4 +2,6 @@ import styled from 'styled-components';
 
 const StyledLanding = styled.div``;
 
-export { StyledLanding }
+const StyledLandingButton = styled.button``;
+
+export { StyledLanding, StyledLandingButton }
