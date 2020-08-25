@@ -1,20 +1,35 @@
-import React, { FC, SyntheticEvent, useState } from 'react';
+import React, { FC, SyntheticEvent, useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Input from '../Input/Input';
 
-import { StyledLanding, StyledLandingButton } from './Landing.styles';
+import { StyledLanding, StyledLandingButton, StyledLandingHeading, StyledLandingMarketingText } from './Landing.styles';
 
 const Landing: FC = () => {
-  const [state, setState] = useState({});
+  const history = useHistory();
+
+  const reducer = (state, action) => {
+    switch(action.type) {
+      case 'CHANGE_INPUT': {
+        const name = action.target.name;
+        const value = action.target.value;
+
+        return {
+          ...state,
+          [name]: value,
+        }
+      }
+      default: 
+        return state
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, {});
 
   const onChange = (event: SyntheticEvent) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-
-    return setState({
-      ...state,
-      [name]: value,
+    dispatch({
+      type: 'CHANGE_INPUT',
+      target: event.target,
     })
   }
 
@@ -32,17 +47,17 @@ const Landing: FC = () => {
     // I would use fetch here with a POST method, but to keep things brief, I've left this as a resolved promise.
     const data = await Promise.resolve(state);
     
-    if(validateData(parseInt(data.creditScore, 10), parseInt(data.price, 10), parseInt(data.income, 10))) {
-      // Show success
+    if (validateData(parseInt(data.creditScore, 10), parseInt(data.price, 10), parseInt(data.income, 10))) {
+      history.push('/new-account')
     } else {
-      // Show disqualification
+      history.push('/disqualified')
     }
-    
-    // return data;
   }
 
   return (
     <StyledLanding>
+      <StyledLandingHeading>Auto Loan Calculator</StyledLandingHeading>
+      <StyledLandingMarketingText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</StyledLandingMarketingText>
       <form onChange={onChange} onSubmit={onSubmit}>
         <Input type='number' placeholder='Purchase Price' name='price' />
         <Input type='text' placeholder='Auto Make' name='make' />
