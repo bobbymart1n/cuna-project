@@ -45,9 +45,15 @@ const Landing: FC = () => {
     event.preventDefault();
 
     // I would use fetch here with a POST method, but to keep things brief, I've left this as a resolved promise.
-    const data = await Promise.resolve(state);
+    let data;
+
+    if (parseInt(state.price, 10) > 1000000) {
+      data = await Promise.reject(console.error('Bad Request'))
+    } else {
+      data = await Promise.resolve(state);
+    }
     
-    if (validateData(parseInt(data.creditScore, 10), parseInt(data.price, 10), parseInt(data.income, 10))) {
+    if (data && validateData(parseInt(data.creditScore, 10), parseInt(data.price, 10), parseInt(data.income, 10))) {
       history.push('/new-account')
     } else {
       history.push('/disqualified')
