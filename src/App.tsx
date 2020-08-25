@@ -4,7 +4,9 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+
 import Landing from './components/Landing/Landing';
+import Disqualification from './components/Disqualification/Disqualification';
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
           <Landing />
         </Route>
         <Route path='/disqualified'>
-          {/* Disqualified component here */}
+          <Disqualification />
         </Route>
         <Route path='/new-account'>
           {/* New account component here */}
