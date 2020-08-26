@@ -7,6 +7,7 @@ import {
 
 import Landing from './components/Landing/Landing';
 import Disqualification from './components/Disqualification/Disqualification';
+import NewAccount from './components/NewAccount/NewAccount';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Disqualification />
         </Route>
         <Route path='/new-account'>
-          {/* New account component here */}
+          <NewAccount />
         </Route>
       </Switch>
     </Router>
