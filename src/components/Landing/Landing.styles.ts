@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface LandingProps {
+  readonly active?: boolean;
+}
+
 const StyledLanding = styled.div`
   max-width: 474px;
   margin: 0 auto;
@@ -15,4 +19,17 @@ const StyledLandingMarketingText = styled.p`
   margin: 20px 0;
 `;
 
-export { StyledLanding, StyledLandingHeading, StyledLandingMarketingText }
+const StyledLandingError = styled.div<LandingProps>`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  background-color: #FF5252;
+  width: 100%;
+  height: 80px;
+`;
+
+export { StyledLanding, StyledLandingHeading, StyledLandingError, StyledLandingMarketingText }

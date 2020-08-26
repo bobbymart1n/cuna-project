@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 
-import { StyledLanding, StyledLandingHeading, StyledLandingMarketingText } from './Landing.styles';
+import { StyledLanding, StyledLandingHeading, StyledLandingError, StyledLandingMarketingText } from './Landing.styles';
 
 const Landing: FC = () => {
   const history = useHistory();
@@ -18,6 +18,22 @@ const Landing: FC = () => {
         return {
           ...state,
           [name]: value,
+          error: state.error && parseInt(state.price, 10) < 1000001 && false,
+        }
+      }
+      case 'SUBMIT_PRICE_CHECK': {
+        if (action.error) {
+          return {
+            ...state,
+            error: 'Purchase price is too high. Please enter new purchase price.'
+          }
+        }
+        break;
+      }
+      case 'CLEAR_ERROR': {
+        return {
+          ...state,
+          error: false,
         }
       }
       default: 
@@ -48,11 +64,16 @@ const Landing: FC = () => {
     let data;
     
     if (parseInt(state.price, 10) > 1000000) {
+      dispatch({
+        type: 'SUBMIT_PRICE_CHECK',
+        error: true, 
+      })
       data = await Promise.reject(console.error('Bad Request'))
     } else {
       // I would use fetch here with a POST method, but to keep things brief, I've left this as a resolved promise.
       data = await Promise.resolve(state);
     }
+
     
     if (data && validateData(parseInt(data.creditScore, 10), parseInt(data.price, 10), parseInt(data.income, 10))) {
       history.push('/new-account')
@@ -61,16 +82,22 @@ const Landing: FC = () => {
     }
   }
 
+  console.log(state);
+  
+
   return (
     <StyledLanding>
       <StyledLandingHeading>Auto Loan Calculator</StyledLandingHeading>
       <StyledLandingMarketingText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</StyledLandingMarketingText>
       <form onChange={onChange} onSubmit={onSubmit}>
-        <Input type='number' placeholder='Purchase Price' name='price' />
+        {state.error && (
+          <StyledLandingError>{state.error}</StyledLandingError>
+        )}
+        <Input type='number' placeholder='Purchase Price' name='price' hasError={state.error} />
         <Input type='text' placeholder='Auto Make' name='make' />
         <Input type='text' placeholder='Auto Model' name='model' />
         <Input type='number' placeholder='Estimated Yearly Income' name='income' />
-        <Input type='number' placeholder='Estimated Credit Score' name='creditScore' />
+        <Input type='number' placeholder='Estimated Credit Score' name='creditScore' min='300' max='850' />
         <Button type='submit' text='Calculate' />
       </form>
     </StyledLanding>

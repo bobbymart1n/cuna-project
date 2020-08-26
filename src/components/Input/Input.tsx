@@ -7,10 +7,12 @@ type Props = {
   name: string;
   type: string;
   hasError?: boolean;
+  min?: string;
+  max?: string;
 }
 
-const Input: FC<Props> = ({ hasError, placeholder, name, type }) => (
-  <StyledInput type={type} placeholder={placeholder} name={name} hasError={hasError} required />
+const Input: FC<Props> = ({ hasError, placeholder, name, type, min, max }) => (
+  <StyledInput type={type} placeholder={placeholder} name={name} hasError={hasError} min={min} max={max} required />
 );
 
 export default Input;
