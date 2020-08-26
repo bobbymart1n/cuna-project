@@ -80,10 +80,7 @@ const Landing: FC = () => {
     } else {
       history.push('/disqualified')
     }
-  }
-
-  console.log(state);
-  
+  }  
 
   return (
     <StyledLanding>
