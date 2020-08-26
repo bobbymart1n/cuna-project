@@ -21,6 +21,8 @@ const NewAccount: FC = () => {
     return setValidEmail(usernameVal)
   }
 
+  
+
   const passwordValidation = (password: string) => {
     // Create a new regular expression that looks for length, character, capitolization, and symbols without those used by regex
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})');
@@ -35,7 +37,7 @@ const NewAccount: FC = () => {
     const name = target.name;
     const value = target.value;
 
-    if (name === 'password') {
+    if (name === 'password' || name === 'confirmPassword') {
       passwordValidation(value)
     } else {
       usernameValidation(value)
