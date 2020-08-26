@@ -8,6 +8,7 @@ import {
 import Landing from './components/Landing/Landing';
 import Disqualification from './components/Disqualification/Disqualification';
 import NewAccount from './components/NewAccount/NewAccount';
+import Success from './components/Success/Success';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route path='/new-account'>
           <NewAccount />
+        </Route>
+        <Route path='/success'>
+          <Success />
         </Route>
       </Switch>
     </Router>
