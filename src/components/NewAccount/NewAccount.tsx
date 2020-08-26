@@ -8,8 +8,8 @@ import { StyledNewAccount } from './NewAccount.styles';
 
 const NewAccount: FC = () => {
   const [ state, setState ] = useState({});
-  const [ validEmail, setValidEmail ] = useState(true);
-  const [ validPassword, setValidPassword ] = useState(true);
+  const [ validEmail, setValidEmail ] = useState(false);
+  const [ validPassword, setValidPassword ] = useState(false);
   const history = useHistory();
   
   const usernameValidation = (username: string) => {
@@ -22,14 +22,12 @@ const NewAccount: FC = () => {
   }
 
   const passwordValidation = (password: string) => {
-    // Create a new regular expression that looks for length, character, and symbols without those used by regex
+    // Create a new regular expression that looks for length, character, capitolization, and symbols without those used by regex
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})');
     
-    const passwordVal = passwordRegex.test(password)
+    const passwordVal = passwordRegex.test(password);    
 
-    if (passwordVal && state.confirmPassword === password) {
-      return setValidPassword(passwordVal)
-    }
+    return setValidPassword(passwordVal)
   }
 
   const onChange = (event: SyntheticEvent) => {
